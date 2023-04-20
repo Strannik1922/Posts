@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Форма</h1>
+<form method="post">
+    {% csrf_token %}
+    <h3>Введите заголовок <br>{{ form.title }}</h3>
+    <h3>Выберите категорию <br>{{ form.category }}</h3>
+    <h3>Введите текст <br>{{ form.text }}</h3>
+    <button id="button_post" type="submit">Создать</button>
+    <span>{{ error }}</span><br>
+    <span><h3>{{ data }}</h3></span>
+</form>
+
+{% if posts %}
+    <h1>Все посты</h1>
+    <button id="button_get">Получить посты</button>
+    <div id="posts" style="display: none">
+        {% for post in posts %}
+            <div>
+                <p>
+                    <strong>ID:</strong> {{ post.id }}<br>
+                    <strong>Заголовок:</strong> {{ post.title }}<br>
+                    <strong>Категория:</strong> {{ post.category }}<br>
+                    <strong>Текст:</strong> {{ post.text }}<br>
+                    <strong>Дата создания:</strong> {{ post.created_at }}<br>
+                    <strong>Количество символов:</strong> {{ post.count }}<br>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <h3>Постов нет</h3>
+{% endif %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static 'main/js/script.js' %}"></script>
+</body>
+</html>
